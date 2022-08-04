@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	<title>IOTSC核酸檢測結果申報平台</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style type="text/css">
+
+body{
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+ 		background-color: rgb(242 242 242);
+	}
+
+	@media only screen and (min-width: 600px) {
+		header{
+			width:100%;
+			height:10vh;
+			background-color: rgb(0, 44, 85);
+		}
+		header > div {
+			position: absolute;
+		}
+
+	}
+
+	@media only screen and (max-width: 600px) {
+		header{
+			flex-wrap: wrap;
+			width:100%;
+			background-color: rgb(0, 44, 85);
+		}
+		header > div {
+			padding:10px;
+		}
+		header > a{
+			margin: 0 auto;
+		}
+	}
+
+
+</style>
+<body>
+    <header class="w-full md:w-full flex items-center px-4" >
+        <a href="https://www.um.edu.mo/"><img src="https://www.um.edu.mo/wp-content/uploads/2021/12/UM_logo_horizontal-2.png" width="284" height="96" alt="University of Macau Logo" style="height: 65px; width: auto;"></a>
+        <div class="w-full" > 
+            <h2 class=" flex justify-center items-center text-white text-xl">IOTSC核酸檢測結果申報平台</h2>
+        </div>
+    </header>
+
+    <main class="flex justify-center items-center" style="height: 80vh;width: 100%">
+    	
+
+    	<div class="main_box flex justify-center items-center flex-wrap p-8" style="width:90%; max-width: 1000px;background:white;border-radius: 10px; border:1px solid #ccc">
+			<h2 class="text-xl w-full text-center p-4">IOTSC內部</h2>
+			<h2 class="text-xl w-full text-center p-4">核酸檢測結果申報平台</h2>
+			<h2 class="text-xl w-full text-center p-4">Nucleic Acid Test Reporting Platform</h2>
+
+	    	<a class="text-xl w-full text-center p-4" style="width: 50%;background-color: rgb(0, 44, 85);border-radius: 5px; color: white;display: block;" href="/formPage">開始申報 | Start</a>	
+    	</div>
+
+
+    </main>
+
+</body>
+</html>

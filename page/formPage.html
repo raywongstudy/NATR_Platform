@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	<title>IOTSC核酸檢測結果申報平台</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style type="text/css">
+/* switch button css */
+
+	.switch {
+	position: relative;
+	display: inline-block;
+	width: 37px;
+	height: 22px;
+	}
+
+	.switch input { 
+	opacity: 0;
+	width: 0;
+	height: 0;
+	}
+
+	.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+	}
+
+	.slider:before {
+	position: absolute;
+	content: "";
+	height: 14px;
+	width: 14px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+	}
+
+	input:checked + .slider {
+	background-color: #2196F3;
+	}
+
+	input:focus + .slider {
+	box-shadow: 0 0 1px #2196F3;
+	}
+
+	input:checked + .slider:before {
+	-webkit-transform: translateX(14px);
+	-ms-transform: translateX(14px);
+	transform: translateX(14px);
+	}
+
+	/* Rounded sliders */
+	.slider.round {
+	border-radius: 34px;
+	}
+
+	.slider.round:before {
+	border-radius: 50%;
+	}
+
+	/* switch button css end*/
+
+	body{
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+ 		background-color: rgb(242 242 242);
+	}
+	@media only screen and (min-width: 600px) {
+		header{
+			width:100%;
+			height:10vh;
+			background-color: rgb(0, 44, 85);
+		}
+		header > div {
+			position: absolute;
+		}
+		.form_label_use{
+			width:350px;
+			text-align: right;
+		}
+		.form_input_use{
+			border:1px solid #ccc;
+			text-align-last: center;
+		}
+		.local_storage_show{
+			width: 100%;
+			text-align: center;
+			background: #ffdbdb;
+			padding: 7px;
+			border-radius: 10px;
+			color: #595959;
+		}
+
+	}
+
+	@media only screen and (max-width: 600px) {
+
+		header{
+			flex-wrap: wrap;
+			width:100%;
+			background-color: rgb(0, 44, 85);
+		}
+		header > div {
+			padding:10px;
+		}
+		header > a{
+			margin: 0 auto;
+		}
+		.form_label_use{
+			width:100%;
+			text-align: left;
+		}
+		.form_input_use{
+			width:100%;
+			border:1px solid #ccc;
+			text-align-last: center;
+		}
+		.local_storage_show{
+			width: 100%;
+			text-align: center;
+			background: #ffdbdb;
+			padding: 10px;
+			color: #595959;
+		}
+	}
+
+</style>
+<body>
+    <header class="w-full flex items-center px-4" >
+        <a href="https://www.um.edu.mo/"><img src="https://www.um.edu.mo/wp-content/uploads/2021/12/UM_logo_horizontal-2.png" width="284" height="96" alt="University of Macau Logo" style="height: 65px; width: auto;"></a>
+        <div class=" w-full" > 
+            <h2 class=" flex justify-center items-center text-white text-xl">IOTSC核酸檢測結果申報平台</h2>
+        </div>
+    </header>
+
+    <main class="flex justify-center items-center" style="height: 80vh;width: 100%">
+
+    	<div class="main_box flex justify-center items-center flex-wrap p-8" style="width:90%; max-width: 1000px;background:white;border-radius: 10px; border:1px solid #ccc">
+    		<h2 id="user_name_checking" class="w-full text-center p-4" style="display:none;background:#d21616;color:white">用戶姓名未填寫</h2>
+    		<h2 id="user_id_checking" class="w-full text-center p-4" style="display:none;background:#d21616;color:white">學生/職員ID未填寫</h2>
+    		<h2 id="file_checking" class="w-full text-center p-4" style="display:none;background:#d21616;color:white">所選擇的檔案格式不正確</h2>
+			
+			<div class="local_storage_show" id="local_storage_show">
+				<label class="switch">
+					<input type="checkbox" onchange="input_local_storage_data()">
+					<span class="slider round"></span>
+				</label>
+				使用已儲存的資料填寫
+				Fill out with saved data
+			</div>
+			
+			<h2 class="text-xl w-full text-center p-2 font-bold">IOTSC核酸檢測結果申報平台</h2>
+			<h2 class="text-xl w-full text-center p-2 font-bold">IOTSC Nucleic Acid Test Reporting Platform</h2>
+
+			<hr>
+			<form id="form_submit" class="flex justify-center items-center flex-wrap" style="border-top:1px solid #ccc ;" action="fileupload" method="post" enctype="multipart/form-data">
+
+				<div class="w-full flex justify-center items-center flex-wrap text-xl p-2">
+					<label for="user_name" class="p-2 form_label_use" >Name | 姓名：</label>
+				    <input id="user_name" class="text-center m-2 form_input_use" type="text" name="user_name">
+				</div>
+
+				<div class="w-full flex justify-center items-center flex-wrap text-xl p-2">
+					<label for="user_id" class="p-2 form_label_use">Student/Staffs ID | 學生/職員ID：</label>
+				    <input id="user_id" class="text-center m-2 form_input_use" type="text" name="user_id">
+				</div>
+
+				<div class="w-full flex justify-center items-center flex-wrap text-xl p-2">
+					<input id="filename_use" class="w-full text-center m-2" onchange="validateSize(this)" style="text-align-last: center;" type="file" name="filetoupload">
+				</div>
+				
+				<div class="w-full flex justify-center items-center flex-wrap text-xl p-2">
+					<label for="report_date">Nucleic Acid Test Report Date | 核酸檢測報告日期：</label>
+					<input id="report_date" class="text-center m-2 form_input_use" style="text-align-last: center;" type="date" name="report_date">
+				</div>
+
+			    <a class="w-full text-center p-2" style="display:block;width: 50%;background-color: rgb(0, 44, 85);border-radius: 5px; color: white;display: block;cursor: pointer;" onclick="validate_fileupload();"> 提交 | Submit </a>
+
+		    </form>
+
+    	</div>
+
+
+    </main>
+
+</body>
+
+<script type="text/javascript">
+
+// for localstorage
+	local_storage_show = false
+	if(localStorage.length > 0){
+		local_storage_show = true
+		document.querySelector("#local_storage_show").style.display = "block";
+	}else{
+		document.querySelector("#local_storage_show").style.display = "none";
+	}
+
+	function input_local_storage_data(){
+		checkbox_status = document.querySelector('.switch > input').checked
+
+		if(checkbox_status){
+			document.querySelector('#user_name').value = localStorage['user_name']
+			document.querySelector('#user_id').value = localStorage['user_id']
+		}else{
+			document.querySelector('#user_name').value = ""
+			document.querySelector('#user_id').value = ""
+		}
+		
+	}
+
+// for file checking
+	var file_size_checking = ' '
+
+	function validateSize(input) {
+		const fileSize = input.files[0].size / 1024 / 1024; // in MiB
+		if (fileSize > 3) {
+			alert('File size exceeds 3 MiB');
+			file_size_checking = false
+			// $(file).val(''); //for clearing with Jquery
+		} else {
+			file_size_checking = true
+			// Proceed further
+		}
+	}
+
+	function validate_fileupload()
+	{
+		fileName = document.querySelector('#filename_use').value
+
+	    var allowed_extensions = new Array("jpg","png","jpeg","heic","heif");
+	    var file_extension = fileName.split('.').pop().toLowerCase(); // split function will split the filename by dot(.), and pop function will pop the last element from the array which will give you the extension as well. If there will be no extension then it will return the filename.
+
+	    file_upload_result = false
+
+	    for(var i = 0; i <= allowed_extensions.length; i++)
+	    {
+	        if(allowed_extensions[i]==file_extension)
+	        {
+	            file_upload_result = true; // valid file extension
+	        }
+
+	    }
+
+		user_name_check = document.querySelector("#user_name").value.length > 0
+		user_id_check = document.querySelector("#user_id").value.length > 0
+		report_date_check = document.querySelector('#report_date').value.length > 0
+
+		if(user_name_check == false){
+			document.querySelector('#user_name_checking').style.display = "block";
+		}else{
+			document.querySelector('#user_name_checking').style.display = "none";
+		}
+		
+		if(user_id_check == false){
+			document.querySelector('#user_id_checking').style.display = "block";
+		}else{
+			document.querySelector('#user_id_checking').style.display = "none";
+		}
+
+		if(file_upload_result == false){
+			document.querySelector('#file_checking').style.display = "block";
+		}else{
+			document.querySelector('#file_checking').style.display = "none";
+		}
+		
+
+		if( file_upload_result && user_name_check && user_id_check && file_size_checking && report_date_check){
+			localStorage['user_id'] = document.querySelector('#user_id').value
+			localStorage['user_name'] = document.querySelector('#user_name').value
+			document.querySelector('#form_submit').submit();
+	    }else if(file_size_checking == false){
+			alert('File size exceeds 3 MiB');
+		}else if(report_date_check == false){
+			alert('Please select the report date');
+		}
+
+	    file_upload_result = false;
+
+	}
+
+</script>
+
+
+</html>
+
