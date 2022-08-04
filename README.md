@@ -10,8 +10,10 @@ In 2022/6/18 due to the new crown epidemic, the University of Macau need the sta
 搭建這個小平台的原因：
 在2022/6/18由於新冠疫情的爆發，澳門大學需要教職工和學生上報核酸檢測結果，所以我用了4個小時左右搭建了一個小平台來存儲核酸檢測圖片，因為這個平台是快速構建的，所以我建議在內部網絡中構建並使用它。
 
+![platform image](./pictures/image.png)
 
 need handle the image size and format in the nodejs , but I handle in the front end javascript , this is the secure problem, but this version havn't update.
+
 需要在nodejs中處理上傳圖像大小和格式的問題，但在此項目中我在前端javascript中處理這些問題，這是一個安全的漏洞，但在這個版本中我沒有更新到。
 
 
@@ -20,20 +22,16 @@ need handle the image size and format in the nodejs , but I handle in the front 
 put the entire folder copy on your linux server, you need to install nodejs in advance, and then use node to start it.
 
 
-> nodejs install
+> nodejs install and run the project
 ```bash
-	sudo apt install nodejs
-```
+sudo apt install nodejs
 
-```bash
-	npm install
-```
+npm install
 
-```bash
-	node upload_project.js
+node upload_project.js
 ```
 
 > use nohub to hold this project in server
 ```bash
-	nohup node upload_project.js&
+nohup node upload_project.js&
 ```
